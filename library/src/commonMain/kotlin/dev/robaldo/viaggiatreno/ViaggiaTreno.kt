@@ -253,7 +253,7 @@ class ViaggiaTreno(
      */
     suspend fun getTrainDetails(
         originStationId: String,
-        runningTrainNumber: Int,
+        runningTrainNumber: String,
         departureTime: ULong
     ): RestEasyTrainData? {
         val requestUrl = "$BASE_URL/andamentoTreno/$originStationId/$runningTrainNumber/$departureTime"
