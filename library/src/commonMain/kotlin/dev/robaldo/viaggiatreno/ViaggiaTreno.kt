@@ -5,14 +5,22 @@ package dev.robaldo.viaggiatreno
 
 import dev.robaldo.viaggiatreno.enums.DetailType
 import dev.robaldo.viaggiatreno.enums.Region
+import dev.robaldo.viaggiatreno.models.RestEasyTrainData
 import dev.robaldo.viaggiatreno.models.stations.Station
 import dev.robaldo.viaggiatreno.models.stations.StationSearchResult
 import dev.robaldo.viaggiatreno.models.trains.AutocompletedTrain
+import dev.robaldo.viaggiatreno.models.trains.StationBoardTrain
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
 import kotlinx.serialization.json.Json
+import java.time.DayOfWeek
+import java.time.Instant
+import java.time.Month
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 
 /**
@@ -36,7 +44,7 @@ class ViaggiaTreno(
      * @throws Exception on HTTP Status Codes that are not 200
      */
     suspend fun listStations(region: Region): List<Station>? {
-        val requestUrl = "${baseUrl}/elencoStazioni/${region.id}"
+        val requestUrl = "${BASE_URL}/elencoStazioni/${region.id}"
 
         val response = httpClient.get(requestUrl)
 
@@ -58,7 +66,7 @@ class ViaggiaTreno(
      * @throws Exception on HTTP Status Codes that are not 200
      */
     suspend fun searchStation(stationName: String): List<StationSearchResult> {
-        val requestUrl = "${baseUrl}/cercaStazione/${stationName}"
+        val requestUrl = "${BASE_URL}/cercaStazione/${stationName}"
         val response = httpClient.get(requestUrl)
 
         if ( response.bodyAsText().isEmpty() ) return emptyList()
@@ -81,7 +89,7 @@ class ViaggiaTreno(
      * @throws Exception on HTTP Status Codes that are not 200
      */
     suspend fun autocompleteStation(stationName: String): List<StationSearchResult> {
-        val requestUrl = "${baseUrl}/autocompletaStazione/${stationName}"
+        val requestUrl = "${BASE_URL}/autocompletaStazione/${stationName}"
         val response = httpClient.get(requestUrl)
 
         if ( response.bodyAsText().isEmpty() ) return emptyList()
@@ -133,7 +141,7 @@ class ViaggiaTreno(
      * @throws Exception On HTTP Status Codes other than 200.
      */
     suspend fun regionFromStation(stationId: String): Region? {
-        val requestUrl = "${baseUrl}/regione/${stationId}"
+        val requestUrl = "${BASE_URL}/regione/${stationId}"
         val response = httpClient.get(requestUrl)
 
         if ( response.bodyAsText().isEmpty() ) return null
@@ -147,7 +155,7 @@ class ViaggiaTreno(
     }
 
     suspend fun listStationsForCity(stationId: String): List<StationSearchResult> {
-        val requestUrl = "${baseUrl}/elencoStazioniCitta/${stationId}"
+        val requestUrl = "${BASE_URL}/elencoStazioniCitta/${stationId}"
         val response = httpClient.get(requestUrl)
 
         if ( response.bodyAsText().isEmpty() ) return emptyList()
@@ -197,7 +205,7 @@ class ViaggiaTreno(
             actualRegion = this.regionFromStation(station)
         }
 
-        val requestUrl = "${baseUrl}/dettaglioStazione/${station}/${actualRegion!!.id}"
+        val requestUrl = "${BASE_URL}/dettaglioStazione/${station}/${actualRegion!!.id}"
         val response = httpClient.get(requestUrl)
 
         if ( response.bodyAsText().isEmpty() ) return null
@@ -210,7 +218,7 @@ class ViaggiaTreno(
     }
 
     suspend fun autocompleteTrainFromNumber(runningTrainNumber: Int): List<AutocompletedTrain> {
-        val requestUrl = "${baseUrl}/cercaNumeroTrenoTrenoAutocomplete/${runningTrainNumber}"
+        val requestUrl = "${BASE_URL}/cercaNumeroTrenoTrenoAutocomplete/${runningTrainNumber}"
         val response = httpClient.get(requestUrl)
 
         if ( response.bodyAsText().isEmpty() ) return emptyList()
@@ -227,7 +235,7 @@ class ViaggiaTreno(
         return trains.toList()
     }
 
-    suspend fun getTrainDetails(train: AutocompletedTrain) {
+    suspend fun getTrainDetails(train: AutocompletedTrain): RestEasyTrainData? {
         return this.getTrainDetails(
             originStationId = train.originStationId,
             runningTrainNumber = train.trainNumber,
@@ -247,8 +255,16 @@ class ViaggiaTreno(
         originStationId: String,
         runningTrainNumber: Int,
         departureTime: ULong
-    ) {
+    ): RestEasyTrainData? {
+        val requestUrl = "$BASE_URL/andamentoTreno/$originStationId/$runningTrainNumber/$departureTime"
+        val response = httpClient.get(requestUrl)
 
+        if ( response.bodyAsText().isEmpty() ) return null
+        if ( response.status != HttpStatusCode.OK ) {
+            throw Exception(response.bodyAsText())
+        }
+
+        return json.decodeFromString<RestEasyTrainData>(response.bodyAsText())
     }
 
     /**
@@ -267,8 +283,8 @@ class ViaggiaTreno(
         stationId: String,
         timeString: String,
         detailType: DetailType = DetailType.DEPARTURES
-    ): List<String> {
-        val requestUrl = "${baseUrl}/${detailType.apiUrlPath}/${stationId}/${timeString}"
+    ): List<StationBoardTrain> {
+        val requestUrl = "${BASE_URL}/${detailType.apiUrlPath}/${stationId}/${timeString}"
         val response = httpClient.get(requestUrl)
 
         if ( response.bodyAsText().isEmpty() ) return emptyList()
@@ -276,10 +292,10 @@ class ViaggiaTreno(
             throw Exception(response.bodyAsText())
         }
 
-        return emptyList() // TODO)) Model
+        return json.decodeFromString<List<StationBoardTrain>>(response.bodyAsText())
     }
 
     companion object {
-        private const val baseUrl = "http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/"
+        private const val BASE_URL = "http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/"
     }
 }
