@@ -21,7 +21,7 @@ data class StationBoardTrain(
     val millisDataPartenza: String? = null,
 
     @SerialName("numeroTreno")
-    val numeroTreno: Int? = null,
+    val numeroTreno: String? = null,
 
     @SerialName("categoria")
     val categoria: String? = null,

@@ -1,7 +1,7 @@
 package dev.robaldo.viaggiatreno.models.trains
 
 data class AutocompletedTrain(
-    val trainNumber: Int,
+    val trainNumber: String,
     val originStationLabel: String,
     val humanDepartureDate: String,
     val originStationId: String,
@@ -16,7 +16,7 @@ data class AutocompletedTrain(
             val secondItemParts = sections[1].split("-")
 
             return AutocompletedTrain(
-                trainNumber = firstItemParts[0].toInt(),
+                trainNumber = firstItemParts[0],
                 originStationLabel = firstItemParts[1],
                 humanDepartureDate = firstItemParts[2],
                 originStationId = secondItemParts[1],
