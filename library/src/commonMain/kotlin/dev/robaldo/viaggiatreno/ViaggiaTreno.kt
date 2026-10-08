@@ -15,12 +15,9 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
 import kotlinx.serialization.json.Json
-import java.time.DayOfWeek
-import java.time.Instant
-import java.time.Month
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.util.Locale
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 
 /**
@@ -271,20 +268,20 @@ class ViaggiaTreno(
      * Fetch all departures or arrivals for a given station at a given time.
      *
      * @param stationId The [Station] ID of the station to get the trains for.
-     * @param timeString A string formatted as `3-letter-month two-digit-day four-digit-year hour-24:two-digit-minutes:two-digit-seconds GMT+TIMEZONE`
-     *                   Example: `Apr 23 2026 18:50:20 GMT+0200`.
+     * @param time A Kotlin Datetime Instant from which the Station's trains will be fetched. Defaults to `Clock.System.now()`
      * @param detailType The type of Trains to fetch. can be [DetailType.DEPARTURES] or [DetailType.ARRIVALS]
      *
      * @throws Exception if the API returns an error.
      *
      * @see [DetailType]
      */
+    @OptIn(ExperimentalTime::class)
     suspend fun getStationTrains(
         stationId: String,
-        timeString: String,
+        time: Instant = Clock.System.now(),
         detailType: DetailType = DetailType.DEPARTURES
     ): List<StationBoardTrain> {
-        val requestUrl = "${BASE_URL}/${detailType.apiUrlPath}/${stationId}/${timeString}"
+        val requestUrl = "${BASE_URL}/${detailType.apiUrlPath}/${stationId}/${time.getViaggiatrenoTimeString()}"
         val response = httpClient.get(requestUrl)
 
         if ( response.bodyAsText().isEmpty() ) return emptyList()
