@@ -1,4 +1,5 @@
-import com.android.build.api.dsl.androidLibrary
+@file:Suppress("MISSING_DEPENDENCY_CLASS_IN_LAMBDA_RECEIVER", "MISSING_DEPENDENCY_CLASS_IN_EXPRESSION_TYPE")
+
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -6,10 +7,11 @@ plugins {
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.vanniktech.mavenPublish)
     kotlin("plugin.serialization") version "2.3.20"
+    id("maven-publish")
 }
 
 group = "dev.robaldo"
-version = "0.0.1"
+version = "0.0.3"
 val artifactId = "viaggiatreno"
 
 kotlin {
@@ -53,6 +55,7 @@ kotlin {
             implementation("io.ktor:ktor-client-core:3.4.2")
             implementation("com.fleeksoft.ksoup:ksoup:0.2.6")
             implementation("com.fleeksoft.ksoup:ksoup-network:0.2.6")
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.8.0")
         }
 
         commonTest.dependencies {
@@ -69,7 +72,6 @@ kotlin {
 
 mavenPublishing {
     publishToMavenCentral()
-
     signAllPublications()
 
     coordinates(group.toString(), artifactId, version.toString())
@@ -78,25 +80,25 @@ mavenPublishing {
         name = "Trenitalia ViaggiaTreno API"
         description = "A library."
         inceptionYear = "2026"
-        url = "https://github.com/c4lopsitta/"
+        url = "https://github.com/c4lopsitta/trenitalia-viaggiatreno-api"
         licenses {
             license {
-                name = "XXX"
-                url = "YYY"
-                distribution = "ZZZ"
+                name = "GNU Affero General Public License Version 3"
+                url = "https://www.gnu.org/licenses/agpl-3.0.html"
+                distribution = "https://www.gnu.org/licenses/agpl-3.0.html"
             }
         }
         developers {
             developer {
-                id = "XXX"
-                name = "YYY"
-                url = "ZZZ"
+                id = "c4lopsitta"
+                name = "Simone Robaldo"
+                url = "https://github.com/c4lopsitta"
             }
         }
         scm {
-            url = "XXX"
-            connection = "YYY"
-            developerConnection = "ZZZ"
+            url = "https://github.com/c4lopsitta/trenitalia-viaggiatreno-api"
+            connection = "scm:git:https://github.com/c4lopsitta/trenitalia-viaggiatreno-api.git"
+            developerConnection = "scm:git:ssh://github.com/c4lopsitta/trenitalia-viaggiatreno-api.git"
         }
     }
 }
