@@ -86,7 +86,9 @@ class TestKt {
             val icData = vtc!!.autocompleteTrainFromNumber(659) // IC to Ventimiglia
             val reData = vtc!!.autocompleteTrainFromNumber(26358) // Regionale to Susa
 
-
+            assert(vtc!!.getTrainDetails(ecData[0]) != null)
+            assert(vtc!!.getTrainDetails(icData[0]) != null)
+            assert(vtc!!.getTrainDetails(reData[0]) != null)
 
             assert(vtc!!.autocompleteTrainFromNumber(3225).isEmpty());
             assert(vtc!!.autocompleteTrainFromNumber(5912).isEmpty());
