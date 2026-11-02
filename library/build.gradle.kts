@@ -40,13 +40,14 @@ kotlin {
             }
         }
     }
-//    iosX64()
-//    iosArm64()
-//    iosSimulatorArm64()
-//    linuxX64()
-//    linuxArm64()
-//    macosX64()
-//    macosArm64()
+
+    iosArm64()
+    iosSimulatorArm64()
+
+    linuxX64()
+    linuxArm64()
+
+    macosArm64()
 
     sourceSets {
         commonMain.dependencies {
