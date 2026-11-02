@@ -19,7 +19,7 @@ import kotlinx.serialization.json.Json
  * @author Simone Robaldo
  */
 object TrenitaliaRestEasy {
-    private const val baseUrl = "http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/"
+    private const val BASE_URL = "http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/"
 
     /** Searches for an individual train by its Running Number.
      *
@@ -27,7 +27,7 @@ object TrenitaliaRestEasy {
      * @author Simone Robaldo
      */
     suspend fun searchTrainByNumber(trainNumber: String): CercaTrenoData? {
-        val response = HttpClient().get(baseUrl + "cercaNumeroTreno/" + trainNumber)
+        val response = HttpClient().get(BASE_URL + "cercaNumeroTreno/" + trainNumber)
         val json = Json { ignoreUnknownKeys = true }
 
         if(response.status != HttpStatusCode.OK) return null
@@ -44,7 +44,7 @@ object TrenitaliaRestEasy {
      * @author Simone Robaldo
      */
     suspend fun searchTrainByNumberWithAutocompletion(trainNumber: String): List<CercaTrenoData> {
-        val response = HttpClient().get(baseUrl + "cercaNumeroTrenoTrenoAutocomplete/" + trainNumber)
+        val response = HttpClient().get(BASE_URL + "cercaNumeroTrenoTrenoAutocomplete/" + trainNumber)
         val tsvResponse = response.bodyAsText()
 
         if(response.status != HttpStatusCode.OK) return emptyList()
@@ -92,7 +92,7 @@ object TrenitaliaRestEasy {
      * @author Simone Robaldo
      */
     suspend fun fetchTrain(train: CercaTrenoData): RestEasyTrainData {
-        val response = HttpClient().get(baseUrl + "andamentoTreno/${train.originCode}/${train.number}/${train.departureTimestamp}")
+        val response = HttpClient().get(BASE_URL + "andamentoTreno/${train.originCode}/${train.number}/${train.departureTimestamp}")
 
         val json = Json {
             ignoreUnknownKeys = true

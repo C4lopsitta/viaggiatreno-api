@@ -12,6 +12,7 @@ import kotlinx.coroutines.test.setMain
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.time.ExperimentalTime
 
 class TestKt {
     var vtc: ViaggiaTreno? = null
@@ -93,6 +94,37 @@ class TestKt {
             assert(vtc!!.autocompleteTrainFromNumber(3225).isEmpty());
             assert(vtc!!.autocompleteTrainFromNumber(5912).isEmpty());
             assert(vtc!!.autocompleteTrainFromNumber(5431).isEmpty());
+        }
+    }
+
+    @OptIn(ExperimentalTime::class)
+    @Test
+    fun overallTest(): Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            val searchResults = vtc!!.autocompleteStation("Torino Porta Nuova")
+
+            val targetStationId = searchResults.firstOrNull()?.id
+            println("[INFO] STATION ID $targetStationId")
+
+            assert(targetStationId != null)
+
+            val departuresFrom = vtc!!.getStationTrains( targetStationId!! )
+
+            assert(departuresFrom.isNotEmpty())
+
+            println("Fetched trains")
+            departuresFrom.forEach {
+                val actualOrigin = it.codOrigine?.let { originId ->
+                    vtc!!.stationDetails(originId)
+                }
+
+                println(actualOrigin)
+
+                println("- ${it.numeroTreno} (${it.categoria}): ${actualOrigin?.cityName} - ${it.destinazione}")
+            }
+
+            println("Fetched trains objects")
+            departuresFrom.forEach { println(it) }
         }
     }
 }

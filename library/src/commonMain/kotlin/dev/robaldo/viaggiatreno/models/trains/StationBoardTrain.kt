@@ -21,7 +21,7 @@ data class StationBoardTrain(
     val millisDataPartenza: String? = null,
 
     @SerialName("numeroTreno")
-    val numeroTreno: String? = null,
+    val numeroTreno: Int? = null,
 
     @SerialName("categoria")
     val categoria: String? = null,
@@ -48,10 +48,10 @@ data class StationBoardTrain(
     val destinazioneEstera: String? = null,
 
     @SerialName("oraPartenzaEstera")
-    val oraPartenzaEstera: String? = null,
+    val oraPartenzaEstera: Long? = null,
 
     @SerialName("oraArrivoEstera")
-    val oraArrivoEstera: String? = null,
+    val oraArrivoEstera: Long? = null,
 
     @SerialName("tratta")
     val tratta: Int? = null,
