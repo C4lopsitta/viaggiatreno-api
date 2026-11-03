@@ -8,7 +8,6 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
 
-@OptIn(ExperimentalTime::class)
 fun Instant.getViaggiatrenoTimeString(): String {
     val timeZone = TimeZone.currentSystemDefault()
     val localDateTime = toLocalDateTime(timeZone)

@@ -275,7 +275,6 @@ class ViaggiaTreno(
      *
      * @see [DetailType]
      */
-    @OptIn(ExperimentalTime::class)
     suspend fun getStationTrains(
         stationId: String,
         time: Instant = Clock.System.now(),
