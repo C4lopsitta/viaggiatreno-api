@@ -68,6 +68,14 @@ kotlin {
             implementation(kotlin("test-junit5"))
             implementation("org.junit.jupiter:junit-jupiter:5.10.0")
         }
+
+        appleTest.dependencies {
+            implementation("io.ktor:ktor-client-darwin:3.4.2")
+        }
+
+        linuxTest.dependencies {
+            implementation("io.ktor:ktor-client-curl:3.4.2")
+        }
     }
 }
 

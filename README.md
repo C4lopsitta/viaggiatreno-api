@@ -19,6 +19,10 @@ license unless otherwise stated.
 - [ ] Statistics
 - [ ] Other (currently) undocumented API endpoints
 
+## Running tests
+Native integration tests exercise the live ViaggiaTreno API using Ktor's Darwin engine on Apple targets and Curl engine on Linux. They require internet access and depend on service availability and current train schedules.
+
+Run the appropriate task on a compatible host: `./gradlew :library:macosArm64Test`, `./gradlew :library:linuxX64Test`, or `./gradlew :library:iosSimulatorArm64Test` (with an available iOS simulator).
 
 Contributions are welcome through forks and pull requests.
 If you are planning on making a Timetables (or similar) application for Android, consider contributing to [this project of mine](https://github.com/C4lopsitta/rfi-timetable-scraper)
