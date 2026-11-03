@@ -18,7 +18,11 @@ import kotlinx.serialization.json.Json
  * @since 1.5.0
  * @author Simone Robaldo
  */
-object TrenitaliaRestEasy {
+@Deprecated(
+    message = "This object is meant just as a reference for easing the porting of the functionalities from the previous app into an independent app. Please avoid using this as it will be removed in the future.",
+    replaceWith = ReplaceWith("ViaggiaTreno", "dev.robaldo.viaggiatreno.ViaggiaTreno"),
+    level = DeprecationLevel.ERROR
+) object TrenitaliaRestEasy {
     private const val BASE_URL = "http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/"
 
     /** Searches for an individual train by its Running Number.
@@ -43,7 +47,11 @@ object TrenitaliaRestEasy {
      * @return [List<CercaTrenoData>] a list containing the matching train(s), empty when none are found.
      * @author Simone Robaldo
      */
-    suspend fun searchTrainByNumberWithAutocompletion(trainNumber: String): List<CercaTrenoData> {
+    @Deprecated(
+        message = "See class deprecation note",
+        level = DeprecationLevel.ERROR,
+        replaceWith = ReplaceWith("ViaggiaTreno.autocompleteTrainFromNumber", "dev.robaldo.viaggiatreno.ViaggiaTreno.autocompleteTrainFromNumber"),
+    ) suspend fun searchTrainByNumberWithAutocompletion(trainNumber: String): List<CercaTrenoData> {
         val response = HttpClient().get(BASE_URL + "cercaNumeroTrenoTrenoAutocomplete/" + trainNumber)
         val tsvResponse = response.bodyAsText()
 

@@ -16,11 +16,11 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
 import kotlinx.serialization.json.Json
 import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
 
 /**
+ * API Interface to Trenitalia's ViaggiaTreno web service.
  *
  * @property httpClient The KTOR HTTP Client to use for requests.
  *
@@ -147,7 +147,7 @@ class ViaggiaTreno(
             throw Exception(response.bodyAsText())
         }
 
-        val regionId = response.bodyAsText().toInt()
+        val regionId = response.bodyAsText().toIntOrNull() ?: return null
         return Region.entries[regionId]
     }
 
@@ -197,14 +197,9 @@ class ViaggiaTreno(
      * @throws Exception On HTTP Status Codes other than 200.
      */
     suspend fun stationDetails(station: String, region: Region? = null): Station? {
-        var actualRegion = region
-        if (region == null) {
-            actualRegion = this.regionFromStation(station)
-        }
-
+        val actualRegion = region ?: regionFromStation(station) ?: throw Exception("Invalid station ID or API Error. Region ID could not be retrieved")
         val requestUrl = "${BASE_URL}/dettaglioStazione/${station}/${actualRegion!!.id}"
         val response = httpClient.get(requestUrl)
-
         if ( response.bodyAsText().isEmpty() ) return null
 
         if ( response.status != HttpStatusCode.OK ) {
