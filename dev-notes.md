@@ -21,11 +21,22 @@ http://www.viaggiatreno.it/infomobilita/resteasy/news/smartcaring?commercialTrai
 
 **Params**
 
-|        Parameter | Type   | Description                                  |
-|-----------------:|:-------|:---------------------------------------------|
-| `number` | `number` | Train running number |
-| `origin` | `string` | Origin staiton ID |
-| `date` | `string` | Date to look up data for, in format `YYYY-MM-DD` |
+| Parameter | Type     | Description                                      |
+|----------:|:---------|:-------------------------------------------------|
+|  `number` | `number` | Train running number                             |
+|  `origin` | `string` | Origin staiton ID                                |
+|    `date` | `string` | Date to look up data for, in format `YYYY-MM-DD` |
+
+## Infomoblity (Train)
+```
+http://www.viaggiatreno.it/infomobilita/resteasy/news/infomobility?trainNumber=${number}
+```
+
+**Params**
+
+| Parameter | Type     | Description                                      |
+|----------:|:---------|:-------------------------------------------------|
+|  `number` | `number` | Train running number                             |
 
 **Description**
 Data is returned as JSON, format is a list of objects, example:
@@ -49,4 +60,5 @@ Data is returned as JSON, format is a list of objects, example:
     }
 ]
 ```
+
 

@@ -1,10 +1,9 @@
-package dev.robaldo.viaggiatreno
+package dev.robaldo.vtclient
 
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.offsetAt
 import kotlinx.datetime.toLocalDateTime
 import kotlin.math.abs
-import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
 

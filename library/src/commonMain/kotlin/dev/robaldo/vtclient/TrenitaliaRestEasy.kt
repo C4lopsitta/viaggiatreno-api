@@ -1,10 +1,10 @@
 // Copyright (C) 2026 c4lopsitta (github username)
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-package dev.robaldo.viaggiatreno
+package dev.robaldo.vtclient
 
-import dev.robaldo.viaggiatreno.models.CercaTrenoData
-import dev.robaldo.viaggiatreno.models.RestEasyTrainData
+import dev.robaldo.vtclient.models.CercaTrenoData
+import dev.robaldo.vtclient.models.RestEasyTrainData
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText

@@ -10,9 +10,9 @@ plugins {
     id("maven-publish")
 }
 
-group = "dev.robaldo"
+group = "dev.robaldo.vtclient"
 version = "0.0.3"
-val artifactId = "viaggiatreno"
+val artifactId = "vtclient"
 
 kotlin {
     jvm() {
@@ -22,7 +22,7 @@ kotlin {
     }
 
     androidLibrary {
-        namespace = "dev.robaldo.viaggiatreno"
+        namespace = "dev.robaldo.vtclient"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
 

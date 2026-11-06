@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "trenitalia-viaggiatreno-api"
+rootProject.name = "ti-vt-api"
 include(":library")

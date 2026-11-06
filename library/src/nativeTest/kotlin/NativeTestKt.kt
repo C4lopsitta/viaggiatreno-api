@@ -1,5 +1,5 @@
-import dev.robaldo.viaggiatreno.ViaggiaTreno
-import dev.robaldo.viaggiatreno.enums.Region
+import dev.robaldo.vtclient.ViaggiaTreno
+import dev.robaldo.vtclient.enums.Region
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
 import kotlinx.coroutines.test.runTest

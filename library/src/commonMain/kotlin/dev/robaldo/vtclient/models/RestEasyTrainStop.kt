@@ -1,7 +1,7 @@
 // Copyright (C) 2026 c4lopsitta (github username)
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-package dev.robaldo.viaggiatreno.models
+package dev.robaldo.vtclient.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 /** Data class for containing deserialized stops from the CercaTreno API
  *
  * @see RestEasyTrainData
- * @see dev.robaldo.viaggiatreno.TrenitaliaRestEasy
+ * @see dev.robaldo.vtclient.TrenitaliaRestEasy
  * @since 1.5.0
  */
 @Serializable

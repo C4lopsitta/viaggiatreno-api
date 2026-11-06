@@ -1,7 +1,7 @@
 // Copyright (C) 2026 c4lopsitta (github username)
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-package dev.robaldo.viaggiatreno.models.stations
+package dev.robaldo.vtclient.models.stations
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

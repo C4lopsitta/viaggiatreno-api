@@ -1,4 +1,4 @@
-package dev.robaldo.viaggiatreno.models.trains
+package dev.robaldo.vtclient.models.trains
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

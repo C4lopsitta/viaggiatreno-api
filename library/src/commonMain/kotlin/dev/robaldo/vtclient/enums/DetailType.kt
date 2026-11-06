@@ -1,4 +1,4 @@
-package dev.robaldo.viaggiatreno.enums
+package dev.robaldo.vtclient.enums
 
 enum class DetailType(
     val apiUrlPath: String
